@@ -116,7 +116,9 @@ export function buildInstallCommand(
   if (selectedPlatform === "windows") {
     scriptFile = "install.ps1";
   }
-  let scriptUrl = `https://raw.githubusercontent.com/komari-monitor/komari-agent/refs/heads/main/${scriptFile}`;
+  // 指向本分支仓库，确保面板生成的一键命令安装的是带「线路识别 + 重传采集」的定制探针。
+  // 注意：官方上游的 install.sh 会从官方 releases 下载官方二进制，因此这里不能指向上游。
+  let scriptUrl = `https://raw.githubusercontent.com/tzb0w0/komari-agent/refs/heads/main/${scriptFile}`;
   if (enableGhproxy && ghproxy) {
     scriptUrl = scriptUrl.slice(8); // 去掉 https://
     if (ghproxy.endsWith("/")) {
