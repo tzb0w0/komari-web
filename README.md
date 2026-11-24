@@ -1,75 +1,83 @@
-# Komari Web UI
+# komari-web（定制分支：线路显示 + 重传测试）
 
-参与翻译Komari？
-- 直接提PR
+Komari 的**前端主题**（React + Vite）。它不独立部署，构建产物会被打包进服务端二进制（`web/public/defaultTheme/dist.tar.zst`）。
 
-We use AI to assist with translations. If you find any issues, please let us know!
+本分支在服务器卡片上新增：
 
-How to contribute to Komari translations?
-- Directly PR
+- **当前线路**：显示探针自动识别的出口线路（线路名 + ASN + 自动识别标记），纯展示、无任何输入控件
+- **重传测试**：在延迟信息下方显示 TCP 重传率、重传报文数、发送报文数
 
-## 开发环境配置
+> 原版 README 已移除，本文档为本分支唯一说明。服务端与探针见 [komari](https://github.com/tzb0w0/komari) / [komari-agent](https://github.com/tzb0w0/komari-agent)。
 
-> 我不是计科专业的，代码质量可能达不到平均水平，React是边学边写的，在此之前我从未接触过前端开发，请多包涵。
+---
 
-### 前置 Nodejs
+## 一、正常使用：不需要单独构建本仓库
 
-如果未安装，请访问 [Node.js 官网](https://nodejs.org/) 下载并安装。版本建议为 22 及以上。
-
-### 安装依赖
+完整系统请用服务端仓库的一键脚本，它会自动构建本仓库并把产物塞进服务端：
 
 ```bash
-npm install
+curl -fsSL https://raw.githubusercontent.com/tzb0w0/komari/main/build-from-source.sh | bash
 ```
 
-> 所有指令均在项目根目录下执行
-
-### 修改API地址
-
-1. 复制 `.env.example` 文件并重命名为 `.env.development`。
-
-2. 修改 `.env.development` 文件中的 `VITE_API_TARGET` 为你的开发环境地址。
-
-### 启动开发服务器
+升级已装好的服务：
 
 ```bash
-npm run dev
+curl -fsSLO https://raw.githubusercontent.com/tzb0w0/komari/main/build-from-source.sh
+sudo bash build-from-source.sh --upgrade
 ```
 
-### 构建
+> 面板生成的「一键安装探针」命令来自本仓库的 `src/pages/admin/servers/installCommand.ts`，
+> 本分支已将其指向 `tzb0w0/komari-agent`，因此面板给出的命令安装的是带新功能的定制探针。
+
+---
+
+## 二、单独开发 / 构建
 
 ```bash
-npm run build
+npm ci          # 或 npm install
+npm run dev     # 本地开发，默认 http://localhost:5173
+npm run build   # 产物输出到 dist/
 ```
 
-## 主题相关
+后端地址默认 `http://127.0.0.1:25774`，可用环境变量覆盖：
 
-如果你需要基于本项目进行二次开发，可以参考以下步骤：
+```bash
+VITE_API_TARGET=http://your-panel:25774 npm run dev
+```
 
-1. 完成开发环境配置
+构建完成后，若要手动打包给服务端：
 
-> 如果你是在 Linux 系统下开发，可以直接运行脚本 `build-theme.sh` 快速生成主题包。
+```bash
+tar -cf /tmp/dist.tar -C dist .
+zstd -19 -T0 -f /tmp/dist.tar -o ../komari/web/public/defaultTheme/dist.tar.zst
+cp komari-theme.json ../komari/web/public/defaultTheme/
+```
 
-2. 修改 `komari-theme.json` 中的相关配置，具体可参考 [主题配置文件 | Komari](https://komari-document.pages.dev/dev/theme.html#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+---
 
-   `configuration` 会根据 `type` 复用 `data` 字段：
+## 三、本分支的改动
 
-   - `managed`: `data` 为配置项数组，后台会生成主题设置表单。
-   - `raw`: `data` 为 HTML 字符串，后台会在主内容区域渲染该 HTML。
-   - `redirect`: `data` 为站内相对路径，以实际部署的站点根目录（如 `VITE_BASE_URL`）为基准；例如根目录为 `/` 时 `settings` 或 `../settings` 会导航到 `/settings`，根目录为 `/abc/` 时会导航到 `/abc/settings`。
+| 文件 | 改动 |
+|---|---|
+| `src/components/LineQualityPanel.tsx`（新增） | 线路徽章 + 重传测试区组件 |
+| `src/components/Node.tsx` | 引入并渲染 `LineQualityPanel` |
+| `src/contexts/NodeListContext.tsx` | 新增 `line_info` 字段与 `parseLineInfo()` 解析器 |
+| `src/contexts/LiveDataContext.tsx` | 实时数据中接入 `retransmit` 映射与变更比较 |
+| `src/types/LiveData.tsx` | 新增 `retransmit` 类型 |
+| `src/pages/admin/servers/installCommand.ts` | 一键命令脚本地址指向本分支探针 |
+| `src/i18n/locales/zh_CN.json`、`en.json` | 新增 `lineQuality` 词条 |
 
-3. 发挥你的想象和创造力，设计并实现你独特的主题风格！
+数据来源：线路来自 `common:getNodes` 的 `line_info`；重传来自 `common:getNodesLatestStatus` 的 `retransmit`。
 
-4. 构建主题
+---
 
-   ```bash
-   npm run build
-   ```
+## 四、翻译
 
-5. 生成的主题文件位于 `dist` 目录下，创建一个新的文件夹 `my-theme`（名称自定），将 `dist` 目录下复制到 `my-theme` 文件夹中。
+欢迎直接提 PR。本分支对文案的改动仅新增 `lineQuality` 一组词条，其余沿用上游。
+注意：仓库内有 i18n 同步工作流，启用时会重排 locale 文件的 key 顺序（本分支已禁用该工作流）。
 
-6. 将 `komari-theme.json` 文件复制到 `my-theme` 文件夹中。
+---
 
-7. 将 `my-theme` 文件夹打包为 ZIP 文件。
+## 五、许可证
 
-8. 在 Komari 的主题管理页面上传并应用你的自定义主题。
+MIT，见 [LICENSE](./LICENSE)。上游版权归 Komari Moniter 所有。
