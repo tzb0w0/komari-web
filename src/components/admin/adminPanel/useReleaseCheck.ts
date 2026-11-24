@@ -47,7 +47,8 @@ export function useReleaseCheck(publicInfo: unknown) {
     async function loadReleases() {
       try {
         const resp = await fetch(
-          "https://api.github.com/repos/komari-monitor/komari/releases?per_page=100",
+          // 只与本分支仓库的 release 比较，避免把官方版本误判为「可更新」
+          "https://api.github.com/repos/tzb0w0/komari/releases?per_page=100",
           {
             headers: {
               Accept: "application/vnd.github+json",
