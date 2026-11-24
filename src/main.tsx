@@ -1,3 +1,5 @@
+// 必须最先导入：为非安全上下文（http + 非 localhost）补上 crypto.randomUUID
+import "./lib/polyfillUuid";
 import React, { StrictMode, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import "./global.css";
