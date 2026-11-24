@@ -31,6 +31,13 @@ export type Record = {
     tcp: number;
     udp: number;
   };
+  /** 探针采集的 TCP 重传数据 */
+  retransmit?: {
+    rate: number;
+    retrans: number;
+    out_segs: number;
+    available: boolean;
+  };
   gpu?: {
     count: number;
     average_usage: number;

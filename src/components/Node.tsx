@@ -30,6 +30,7 @@ import { useKmReducedMotion } from "@/components/motion/MotionProvider";
 import { Skeletonize, skeletonText } from "@/components/ui/skeleton";
 import { useViewTransitionActive } from "@/lib/viewTransitionState";
 import { preloadInstancePage } from "./preloadInstancePage";
+import LineQualityPanel from "./LineQualityPanel";
 
 interface NodeProps {
   basic: NodeBasicInfo;
@@ -349,6 +350,16 @@ const Node = React.memo(
               <Text size="2">
                 {sk(<>↑ {uploadSpeed}/s ↓ {downloadSpeed}/s</>, 14)}
               </Text>
+            </Flex>
+
+            {/* 当前线路（探针自动识别）与重传测试：新增区块 */}
+            <Flex direction="column" className="km-line-quality-wrap" style={{ paddingTop: 6 }}>
+              <LineQualityPanel
+                basic={basic}
+                live={live}
+                isMobile={isMobile}
+                loading={liveLoading}
+              />
             </Flex>
 
             <Flex justify="between" gap="2" hidden={!isMobile}>

@@ -1828,5 +1828,15 @@
     "mode": "View Mode"
   },
   "warn_https": "The current connection is not HTTPS! Your sensitive data is at serious risk. Take immediate action to secure the connection! Copy may not available!",
-  "warn_websocket": "RPC2 request failed, please check the network connection or server status!"
+  "warn_websocket": "RPC2 request failed, please check the network connection or server status!",
+  "lineQuality": {
+    "currentLine": "Current Line",
+    "auto": "Auto-detected",
+    "detecting": "Detecting...",
+    "retransmit": "Retransmit Test",
+    "retransSegs": "Retransmitted",
+    "outSegs": "Sent",
+    "level": "Link quality",
+    "autoHint": "Collected automatically by agent"
+  }
 }

@@ -51,9 +51,33 @@ export type NodeBasicInfo = {
   created_at: string;
   /** 更新时间 */
   updated_at: string;
-  ipv4?: string; 
+  ipv4?: string;
   ipv6?: string;
+  /** 探针自动识别的出口线路信息（JSON 字符串，由后端 line_info 字段返回） */
+  line_info?: string;
 };
+
+/** 解析后的线路信息结构 */
+export type LineDetail = {
+  name: string;
+  id: string;
+  carrier: string;
+  asn: number;
+  ip: string;
+  source: string;
+};
+
+/** 安全解析 line_info JSON，失败返回 null */
+export function parseLineInfo(raw?: string): LineDetail | null {
+  if (!raw) return null;
+  try {
+    const obj = JSON.parse(raw);
+    if (!obj || typeof obj.name !== "string") return null;
+    return obj as LineDetail;
+  } catch {
+    return null;
+  }
+}
 
 interface NodeListContextType {
   nodeList: NodeBasicInfo[] | null;
@@ -138,6 +162,7 @@ export const NodeListProvider: React.FC<{ children: React.ReactNode }> = ({
           updated_at: n.updated_at ?? "",
           ipv4: n.ipv4,
           ipv6: n.ipv6,
+          line_info: n.line_info,
         }));
         setNodeList((previous) => {
           if (!previous) return list;

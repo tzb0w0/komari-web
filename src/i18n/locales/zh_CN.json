@@ -1828,5 +1828,15 @@
     "mode": "显示模式"
   },
   "warn_https": "当前连接不是 HTTPS！您的敏感数据存在严重风险。请立即采取措施确保连接安全！复制操作可能无法使用！",
-  "warn_websocket": "RPC2 请求失败，请检查网络连接或服务器状态！"
+  "warn_websocket": "RPC2 请求失败，请检查网络连接或服务器状态！",
+  "lineQuality": {
+    "currentLine": "当前线路",
+    "auto": "自动识别",
+    "detecting": "探针检测中",
+    "retransmit": "重传测试",
+    "retransSegs": "重传报文",
+    "outSegs": "发送报文",
+    "level": "链路质量",
+    "autoHint": "数据由探针自动采集"
+  }
 }

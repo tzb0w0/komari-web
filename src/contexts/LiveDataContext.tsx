@@ -38,6 +38,8 @@ const sameLiveRecord = (left: LiveRecord, right: LiveRecord) =>
   left.network.totalDown === right.network.totalDown &&
   left.connections.tcp === right.connections.tcp &&
   left.connections.udp === right.connections.udp &&
+  (left.retransmit?.rate ?? -1) === (right.retransmit?.rate ?? -1) &&
+  (left.retransmit?.available ?? false) === (right.retransmit?.available ?? false) &&
   left.gpu?.average_usage === right.gpu?.average_usage &&
   Boolean(left.gpu) === Boolean(right.gpu) &&
   left.uptime === right.uptime &&
@@ -82,6 +84,14 @@ const mergeLiveData = (
         tcp: record.connections ?? 0,
         udp: record.connections_udp ?? 0,
       },
+      retransmit: record.retransmit
+        ? {
+            rate: record.retransmit.rate ?? 0,
+            retrans: record.retransmit.retrans ?? 0,
+            out_segs: record.retransmit.out_segs ?? 0,
+            available: record.retransmit.available ?? false,
+          }
+        : undefined,
       gpu:
         record.gpu !== undefined
           ? { count: 0, average_usage: record.gpu, detailed_info: [] }
