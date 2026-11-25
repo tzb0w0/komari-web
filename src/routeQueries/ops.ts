@@ -10,7 +10,7 @@ import type { OfflineNotification } from "@/contexts/NotificationContext";
 import type { ThemeConfiguration } from "@/utils/themeConfiguration";
 
 // ---------------------------------------------------------------------------
-// 节点列表（NodeDetailsProvider）：/admin/servers、/admin/exec、/admin/ping、/admin/notification/offline
+// 节点列表（NodeDetailsProvider）：/admin/servers、/admin/ping、/admin/notification/offline
 // ---------------------------------------------------------------------------
 
 /** 节点列表：HTTP 错误或响应体 status 不是 success 都算失败（与原实现一致） */
@@ -84,7 +84,6 @@ registerRouteData("/admin/servers", () => {
   prefetchRouteQuery(backendVersionQuery);
 });
 // exec 页面本身由别的分组负责，这里只登记它的 NodeDetailsProvider 用到的节点列表
-registerRouteData("/admin/exec", () => prefetchRouteQuery(nodeDetailsQuery));
 
 // ---------------------------------------------------------------------------
 // 延迟监测 /admin/ping（PingTaskProvider + NodeDetailsProvider）

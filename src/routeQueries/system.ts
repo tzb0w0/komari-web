@@ -1,18 +1,7 @@
-// 页面数据预取登记：exec / pprof / 关于（写法见 ./admin.ts 与 @/lib/routeData）
+// 页面数据预取登记：pprof / 关于（写法见 ./admin.ts 与 @/lib/routeData）
 import { api } from "@/lib/http";
 import { prefetchRouteQuery, routeQuery, type RouteQuery } from "@/lib/routeData";
 import { registerRouteData } from "@/lib/routeRegistry";
-
-// ---------------------------------------------------------------------------
-// 远程执行：节点列表由 NodeDetailsContext（./ops.ts 的 nodeDetailsQuery）负责，这里只登记 2FA 状态
-// ---------------------------------------------------------------------------
-
-/** 当前账号是否开启 2FA；只看响应体，不检查 status 字段 */
-export const execMeQuery = routeQuery("system/exec/me", () =>
-  api.get<{ "2fa_enabled"?: boolean }>("/api/me", { expectSuccess: false }),
-);
-
-registerRouteData("/admin/exec", () => prefetchRouteQuery(execMeQuery));
 
 // ---------------------------------------------------------------------------
 // 诊断（pprof）：概要 + 堆预览。堆预览的地址在概要里，概要一到就接着预取，

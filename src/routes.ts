@@ -212,10 +212,6 @@ export const routes: RouteObject[] = [
         path: "pprof",
         ...page(() => import("./pages/admin/pprof")),
       },
-      {
-        path: "exec",
-        ...page(() => import("./pages/admin/exec")),
-      }
     ],
   },
   {
