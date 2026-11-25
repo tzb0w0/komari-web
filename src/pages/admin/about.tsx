@@ -176,7 +176,7 @@ export default function AboutPage() {
                   </Skeletonize>
                 </AutoHeight>
                 <a
-                  href="https://github.com/komari-monitor/komari/blob/main/README.md"
+                  href="https://github.com/tzb0w0/komari/blob/main/README.md"
                   target="_blank"
                   rel="noreferrer"
                   className="flex flex-row gap-2 text-sm items-center"

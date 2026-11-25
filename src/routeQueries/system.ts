@@ -93,7 +93,7 @@ registerRouteData("/admin/pprof", () => prefetchRouteQuery(pprofSummaryQuery));
 
 export const aboutReadmeQuery = routeQuery("system/about/readme", async () => {
   const res = await fetch(
-    "https://raw.githubusercontent.com/komari-monitor/komari/refs/heads/main/README.md",
+    "https://raw.githubusercontent.com/tzb0w0/komari/refs/heads/main/README.md",
   );
   if (!res.ok) throw new Error(String(res.status));
   return res.text();
