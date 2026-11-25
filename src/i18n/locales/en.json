@@ -1481,7 +1481,13 @@
       },
       "table_prefix_description": "Prefix for monitoring tables, default metric_",
       "table_prefix_title": "Table prefix",
-      "title": "Database"
+      "title": "Database",
+      "collect_title": "Agent Collection",
+      "line_interval_title": "Line Detection Interval (hours)",
+      "line_interval_desc": "How often the agent re-detects the egress line. Default 24 hours.",
+      "retrans_interval_title": "Retransmit Window (minutes)",
+      "retrans_interval_desc": "TCP retransmit rate is measured over this window and refreshed when it ends. Default 30 minutes.",
+      "collect_invalid": "Enter an integer greater than 0"
     },
     "missing_required_fields": "Please fill in the required fields: {{fieldNames}}",
     "notification": {

@@ -101,6 +101,44 @@ export default function MetricsSettings() {
       />
 
       <SettingCardLabel>
+        {t("settings.metrics.collect_title")}
+      </SettingCardLabel>
+
+      <SettingCardShortTextInput
+        title={t("settings.metrics.line_interval_title")}
+        description={t("settings.metrics.line_interval_desc")}
+        descriptionPlacement="footer"
+        type="number"
+        defaultValue={String(toNumber(settings.line_detect_interval_hours, 24))}
+        placeholder="24"
+        OnSave={async (value) => {
+          const n = parseInt(value, 10);
+          if (isNaN(n) || n <= 0) {
+            toast.error(t("settings.metrics.collect_invalid"));
+            return;
+          }
+          await saveMetricSettings({ line_detect_interval_hours: n });
+        }}
+      />
+
+      <SettingCardShortTextInput
+        title={t("settings.metrics.retrans_interval_title")}
+        description={t("settings.metrics.retrans_interval_desc")}
+        descriptionPlacement="footer"
+        type="number"
+        defaultValue={String(toNumber(settings.retransmit_interval_minutes, 30))}
+        placeholder="30"
+        OnSave={async (value) => {
+          const n = parseInt(value, 10);
+          if (isNaN(n) || n <= 0) {
+            toast.error(t("settings.metrics.collect_invalid"));
+            return;
+          }
+          await saveMetricSettings({ retransmit_interval_minutes: n });
+        }}
+      />
+
+      <SettingCardLabel>
         {t("settings.metrics.advanced_title")}
       </SettingCardLabel>
 
