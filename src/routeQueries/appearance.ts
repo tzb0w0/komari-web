@@ -1,7 +1,7 @@
-// 页面数据预取登记：主题 / 插件 / 市场（写法见 ./admin.ts 与 @/lib/routeData）
+// 页面数据预取登记：主题 / 插件（写法见 ./admin.ts 与 @/lib/routeData）
 import { getRPC2Client } from "@/contexts/RPC2Context";
 import { ApiError, api } from "@/lib/http";
-import { prefetchRouteQuery, routeQuery, type RouteQuery } from "@/lib/routeData";
+import { prefetchRouteQuery, routeQuery } from "@/lib/routeData";
 import { registerRouteData } from "@/lib/routeRegistry";
 import { loadThemeManifest, type ThemeConfiguration } from "@/utils/themeConfiguration";
 import { fetchInstalledThemes } from "@/pages/admin/themes/api";

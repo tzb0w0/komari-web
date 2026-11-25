@@ -243,7 +243,7 @@ export default function PluginsPage() {
         {/* control 性格：选中下划线在标签间弹簧滑动（共享指示器，可被打断） */}
         <KmTabsList aria-label={t("common.status", "Status")}>
           <Tabs.Trigger value="all">{t("common.all", "All")}</Tabs.Trigger>
-          <Tabs.Trigger value="running">{t("exec.status.running", "Running")}</Tabs.Trigger>
+          <Tabs.Trigger value="running">{t("plugin.running", "Running")}</Tabs.Trigger>
           <Tabs.Trigger value="stopped">{t("plugin.stopped", "Stopped")}</Tabs.Trigger>
         </KmTabsList>
       </Tabs.Root>

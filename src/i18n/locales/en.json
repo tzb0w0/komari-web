@@ -743,31 +743,6 @@
     "reject": "I do not accept",
     "title": "Legal Notice and Compliance Guide"
   },
-  "exec": {
-    "allCompleted": "All tasks executed successfully",
-    "command": "Execute command",
-    "commandPlaceholder": "whoami (use Shift+Enter to start a new line)",
-    "description": "Remotely execute commands on selected nodes",
-    "errors": {
-      "emptyCommand": "The command cannot be empty.",
-      "executionFailed": "Execution failed",
-      "noNodes": "Please select at least one node."
-    },
-    "execute": "Remote Exec",
-    "executing": "Executing",
-    "pollingTimeout": "Task execution timed out",
-    "results": "Execute result",
-    "selectedNodes": "Selected node",
-    "selectNodes": "Select target node",
-    "status": {
-      "polling": "Fetching the latest execution status...",
-      "running": "Running",
-      "timeout": "Timeout"
-    },
-    "stopPolling": "Stop polling",
-    "taskStarted": "The task has been initiated.",
-    "title": "Remote Exec"
-  },
   "go_to_home": "Go to home",
   "install": {
     "admin_title": "Create administrator account",
