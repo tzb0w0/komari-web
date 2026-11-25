@@ -11,12 +11,6 @@
       "icon": "Server"
     },
     {
-      "labelKey": "operations.workbench",
-      "path": "/terminal",
-      "icon": "SquareTerminal",
-      "newTab": true
-    },
-    {
       "labelKey": "adminNavigation.operations",
       "path": "/admin/ping",
       "icon": "Bolt",

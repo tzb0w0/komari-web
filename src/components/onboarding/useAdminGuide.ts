@@ -13,10 +13,6 @@ const steps: Partial<Record<GuideId, GuideStep[]>> = {
     { target: nav("/admin/servers"), title: "onboarding.install.title", description: "onboarding.install.description" },
     { target: '[data-guide="add-node"]', title: "onboarding.install.add_title", description: "onboarding.install.add_description" },
   ],
-  workbench: [
-    { target: nav("/terminal"), title: "onboarding.workbench.title", description: "onboarding.workbench.description" },
-    { target: nav("/terminal"), title: "onboarding.workbench.files_title", description: "onboarding.workbench.files_description" },
-  ],
   notifications: [
     { target: nav("/admin/notification/channels"), title: "onboarding.notifications.title", description: "onboarding.notifications.description" },
     { target: nav("/admin/notification/offline"), title: "onboarding.notifications.offline_title", description: "onboarding.notifications.offline_description" },
@@ -90,7 +86,6 @@ export function useAdminGuide(ready: boolean) {
     onShown: () => { if (guide) history.mark(guide); },
     act: () => {
       if (guide === "install") document.querySelector<HTMLButtonElement>('[data-guide="add-node"]')?.click();
-      if (guide === "workbench") window.open("/terminal", "_blank", "noopener,noreferrer");
       if (guide === "notifications") navigate("/admin/notification/channels");
       if (guide === "markets") navigate("/admin/market/plugins");
     },

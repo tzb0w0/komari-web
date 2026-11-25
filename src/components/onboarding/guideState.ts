@@ -1,4 +1,4 @@
-export const GUIDE_IDS = ["install", "workbench", "notifications", "markets", "terminal"] as const;
+export const GUIDE_IDS = ["install", "notifications", "markets"] as const;
 export type GuideId = (typeof GUIDE_IDS)[number];
 export const GUIDE_SETTINGS_KEY = "_komari_onboarding_v1";
 
@@ -18,7 +18,6 @@ export function parseGuideState(value: unknown): GuideState {
 export function selectAdminGuide(nodeCount: number, state: GuideState): GuideId | null {
   const candidates: GuideId[] = [
     ...(nodeCount === 0 ? ["install" as const] : []),
-    ...(nodeCount > 0 && !state.workbenchOpened ? ["workbench" as const] : []),
     "notifications",
     "markets",
   ];

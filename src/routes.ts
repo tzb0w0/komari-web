@@ -227,10 +227,6 @@ export const routes: RouteObject[] = [
     ],
   },
   {
-    path: "/terminal",
-    ...page(() => import("./pages/terminal")),
-  },
-  {
     path: "/manage/*",
     ...page(() => import("./pages/manage")),
   },

@@ -83,7 +83,6 @@ export function ExtraWidget({ kind, nodes, latest, limit = 5, loading = false }:
     </Flex> : <Text size="2" color="gray">{t("dashboard.noData", "No data")}</Text>}</Skeletonize>}
     {kind === "shortcuts" && <div>
       <Link className="km-dashboard-quick-link" to="/admin/servers"><Server size={17} />{t("dashboardLayout.servers")}<ArrowUpRight size={15} /></Link>
-      <a className="km-dashboard-quick-link" href="/terminal" target="_blank" rel="noreferrer"><Terminal size={17} />{t("dashboardLayout.terminal")}<ArrowUpRight size={15} /></a>
       <Link className="km-dashboard-quick-link" to="/admin/settings/notification"><Bell size={17} />{t("dashboardLayout.notifications")}<ArrowUpRight size={15} /></Link>
     </div>}
   </Flex>;
