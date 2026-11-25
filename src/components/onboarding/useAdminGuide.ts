@@ -18,10 +18,6 @@ const steps: Partial<Record<GuideId, GuideStep[]>> = {
     { target: nav("/admin/notification/offline"), title: "onboarding.notifications.offline_title", description: "onboarding.notifications.offline_description" },
     { target: nav("/admin/notification/general"), title: "onboarding.notifications.rules_title", description: "onboarding.notifications.rules_description" },
   ],
-  markets: [
-    { target: nav("/admin/market/themes"), title: "onboarding.markets.title", description: "onboarding.markets.description" },
-    { target: nav("/admin/market/plugins"), title: "onboarding.markets.plugins_title", description: "onboarding.markets.plugins_description" },
-  ],
 };
 
 export function useAdminGuide(ready: boolean) {
@@ -73,8 +69,7 @@ export function useAdminGuide(ready: boolean) {
   };
 
   const guideSteps = guide ? steps[guide] ?? [] : [];
-  const menu = guide === "notifications" ? "/admin/notification/channels"
-    : guide === "markets" ? "/admin/themes" : null;
+  const menu = guide === "notifications" ? "/admin/notification/channels" : null;
 
   return {
     guide,
@@ -87,7 +82,6 @@ export function useAdminGuide(ready: boolean) {
     act: () => {
       if (guide === "install") document.querySelector<HTMLButtonElement>('[data-guide="add-node"]')?.click();
       if (guide === "notifications") navigate("/admin/notification/channels");
-      if (guide === "markets") navigate("/admin/market/plugins");
     },
   };
 }

@@ -439,15 +439,7 @@ const ThemePage = () => {
         displayText={displayText}
       />
 
-      <label className="text-muted-foreground text-sm">
-        {t("theme.find_more")}
-        <a
-          href="/admin/market/themes"
-          className="text-accent-9"
-        >
-          {t("market.themes")}
-        </a>
-      </label>
+
     </div>
   );
 };

@@ -118,14 +118,6 @@ export const routes: RouteObject[] = [
         ...page(() => import("./pages/admin/plugin_page")),
       },
       {
-        path: "market/themes",
-        ...page(() => import("./pages/admin/market/themes")),
-      },
-      {
-        path: "market/plugins",
-        ...page(() => import("./pages/admin/market/plugins")),
-      },
-      {
         path: "sessions",
         ...page(() => import("./pages/admin/sessions")),
       },

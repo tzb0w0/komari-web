@@ -5,10 +5,6 @@ import { prefetchRouteQuery, routeQuery, type RouteQuery } from "@/lib/routeData
 import { registerRouteData } from "@/lib/routeRegistry";
 import { loadThemeManifest, type ThemeConfiguration } from "@/utils/themeConfiguration";
 import { fetchInstalledThemes } from "@/pages/admin/themes/api";
-import { fetchMarketCatalog, fetchMarketSources, marketRequest } from "@/pages/admin/market/shared/request";
-import type { MarketKind, MarketSource, MarketSourceStatus } from "@/pages/admin/market/shared/types";
-import type { InstalledTheme, MarketTheme } from "@/pages/admin/market/themes/types";
-import type { MarketPlugin } from "@/pages/admin/market/plugins/types";
 import type { PluginConfiguration, PluginInfo } from "@/types/plugin";
 
 // ---------------------------------------------------------------------------
@@ -112,72 +108,4 @@ registerRouteData("/admin/plugins/config", (_params, search) => {
   prefetchRouteQuery(pluginsQuery);
   const short = search.get("short");
   if (short) prefetchRouteQuery(pluginConfigurationQuery(short));
-});
-
-// ---------------------------------------------------------------------------
-// 市场
-// ---------------------------------------------------------------------------
-
-const marketSourceQueries = {} as Record<MarketKind, RouteQuery<MarketSource[]>>;
-
-/** 市场源列表（每种市场一个固定的 query 对象，页面每次渲染拿到同一个引用） */
-export const marketSourcesQuery = (kind: MarketKind) =>
-  (marketSourceQueries[kind] ??= routeQuery(`appearance/market-sources/${kind}`, async () => {
-    const payload = await fetchMarketSources<MarketSource[]>(kind);
-    return payload.data || [];
-  }));
-
-export interface ThemeMarketData {
-  themes: MarketTheme[];
-  sources: MarketSourceStatus[];
-  installed: Map<string, string>;
-}
-
-/** 主题市场：目录 + 已安装主题（任一失败整体失败，与原 Promise.all 一致） */
-export async function fetchThemeMarket(force = false): Promise<ThemeMarketData> {
-  const [catalogPayload, installedPayload] = await Promise.all([
-    fetchMarketCatalog<{ themes: MarketTheme[]; sources: MarketSourceStatus[] }>("theme", force),
-    marketRequest<InstalledTheme[]>("/api/admin/theme/list"),
-  ]);
-  return {
-    themes: catalogPayload.data?.themes || [],
-    sources: catalogPayload.data?.sources || [],
-    installed: new Map((installedPayload.data || []).map((theme) => [theme.short, theme.version])),
-  };
-}
-
-export const themeMarketQuery = routeQuery("appearance/market-themes", () => fetchThemeMarket());
-
-export interface PluginMarketData {
-  plugins: MarketPlugin[];
-  sources: MarketSourceStatus[];
-  currentVersion: string;
-  installed: PluginInfo[];
-}
-
-/** 插件市场：目录 + 已安装插件（失败当作空）+ 面板版本（失败整体失败） */
-export async function fetchPluginMarket(force = false): Promise<PluginMarketData> {
-  const [catalogPayload, installedResult, versionInfo] = await Promise.all([
-    fetchMarketCatalog<{ plugins: MarketPlugin[]; sources: MarketSourceStatus[] }>("plugin", force),
-    rpcCall<PluginInfo[]>("admin:listPlugins").catch(() => []),
-    rpcCall<{ version: string }>("common:getVersion"),
-  ]);
-  return {
-    plugins: catalogPayload.data?.plugins || [],
-    sources: catalogPayload.data?.sources || [],
-    currentVersion: versionInfo.version,
-    installed: Array.isArray(installedResult) ? installedResult : [],
-  };
-}
-
-export const pluginMarketQuery = routeQuery("appearance/market-plugins", () => fetchPluginMarket());
-
-registerRouteData("/admin/market/themes", () => {
-  prefetchRouteQuery(themeMarketQuery);
-  prefetchRouteQuery(marketSourcesQuery("theme"));
-  prefetchRouteQuery(currentThemeQuery);
-});
-registerRouteData("/admin/market/plugins", () => {
-  prefetchRouteQuery(pluginMarketQuery);
-  prefetchRouteQuery(marketSourcesQuery("plugin"));
 });

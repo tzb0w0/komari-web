@@ -70,19 +70,9 @@
           "icon": "Paintbrush"
         },
         {
-          "labelKey": "market.themes",
-          "path": "/admin/market/themes",
-          "icon": "ShoppingBag"
-        },
-        {
           "labelKey": "plugin.manage",
           "path": "/admin/plugins",
           "icon": "Package"
-        },
-        {
-          "labelKey": "plugin.market",
-          "path": "/admin/market/plugins",
-          "icon": "Store"
         },
         {
           "labelKey": "adminNavigation.pluginSettings",

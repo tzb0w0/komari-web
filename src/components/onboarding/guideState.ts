@@ -1,4 +1,4 @@
-export const GUIDE_IDS = ["install", "notifications", "markets"] as const;
+export const GUIDE_IDS = ["install", "notifications"] as const;
 export type GuideId = (typeof GUIDE_IDS)[number];
 export const GUIDE_SETTINGS_KEY = "_komari_onboarding_v1";
 
@@ -19,7 +19,6 @@ export function selectAdminGuide(nodeCount: number, state: GuideState): GuideId 
   const candidates: GuideId[] = [
     ...(nodeCount === 0 ? ["install" as const] : []),
     "notifications",
-    "markets",
   ];
   return candidates.find((guide) => !state.seen.includes(guide)) ?? null;
 }
